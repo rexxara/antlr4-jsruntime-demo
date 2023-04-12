@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Vite + React + TS</title>
+
+  <script src="https://unpkg.com/node-sql-parser/umd/mysql.umd.js"></script>
+  <!-- <script>
+    window.onload = function () {
+      // Example parser
+      const parser = new NodeSQLParser.Parser()
+      // function selectError() {
+      //   console.log('selectError')
+      //   const ast = parser.astify("select id, name from studentswhere age < 18;")
+      //   console.log(ast)
+      //   const sql = parser.sqlify(ast)
+      //   console.log(sql)
+      // }
+      // selectError();
+      function selectBase() {
+        console.log('select')
+        const ast = parser.astify("select id, name from students where age < 18;")
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectBase();
+
+      function selectDistinct() {
+        console.log('selectDistinct')
+        const ast = parser.astify("SELECT DISTINCT Country FROM Customers;")
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectDistinct();
+
+      function selectWhere() {
+        console.log('selectWhere')
+        const ast = parser.astify("SELECT * FROM Customers WHERE CustomerID=1;")
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectWhere();
+
+      function selectAnd() {
+        console.log('selectAnd')
+        const ast = parser.astify("SELECT * FROM Customers WHERE Country='Germany' AND City='Berlin';")
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectAnd();
+
+      function selectOr() {
+        console.log('selectOr')
+        const ast = parser.astify(`SELECT * FROM Customers
+WHERE City='Berlin' OR City='München';`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectOr();
+      function selectNot() {
+        console.log('selectNot')
+        const ast = parser.astify(`SELECT * FROM Customers
+WHERE NOT Country='Germany';`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectNot();
+
+      function selectAndOrCombine() {
+        console.log('selectAndOrCombine')
+        const ast = parser.astify(`SELECT * FROM Customers
+WHERE Country='Germany' AND (City='Berlin' OR City='München');`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectAndOrCombine();
+      function selectOrderBy() {
+        console.log('selectOrderBy')
+        const ast = parser.astify(`SELECT * FROM Customers
+ORDER BY Country;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectOrderBy();
+
+      function selectNullValue() {
+        console.log('selectNullValue')
+        const ast = parser.astify(`SELECT CustomerName, ContactName, Address
+FROM Customers
+WHERE Address IS NULL;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectNullValue();
+      function selectNotNullValue() {
+        console.log('selectNotNullValue')
+        const ast = parser.astify(`SELECT CustomerName, ContactName, Address
+FROM Customers
+WHERE Address IS NOT NULL;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectNotNullValue();
+      function selectLimit() {
+        console.log('selectLimit')
+        const ast = parser.astify(`SELECT * FROM Customers
+LIMIT 3;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectLimit();
+      function selectMinMax() {
+        console.log('selectMinMax')
+        const ast = parser.astify(`SELECT MIN(Price) AS SmallestPrice
+FROM Products;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectMinMax();
+      function selectCountAvgSum() {
+        console.log('selectCountAvgSum')
+        const ast = parser.astify(`SELECT COUNT(ProductID)
+FROM Products;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectCountAvgSum();
+
+      function selectLike() {
+        console.log('selectLike')
+        const ast = parser.astify(`SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectLike();
+      function selectIn() {
+        console.log('selectIn')
+        const ast = parser.astify(`SELECT * FROM Customers
+WHERE Country IN ('Germany', 'France', 'UK');`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectIn();
+      function selectBetween() {
+        console.log('selectBetween')
+        const ast = parser.astify(`SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectBetween();
+      function selectBetweenText() {
+        console.log('selectBetweenText')
+        const ast = parser.astify(`SELECT * FROM Products
+WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
+ORDER BY ProductName;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectBetweenText();
+
+      function selectAliases() {
+        console.log('selectAliases')
+        const ast = parser.astify(`SELECT CustomerID AS ID, CustomerName AS Customer
+FROM Customers;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectAliases();
+      function selectJoins() {
+        console.log('selectJoins')
+        const ast = parser.astify(`SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+FULL OUTER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectJoins();
+
+      function selectSelfJoin() {
+        console.log('selectSelfJoin')
+        const ast = parser.astify(`SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectSelfJoin();
+
+      function selectUnion() {
+        console.log('selectUnion')
+        const ast = parser.astify(`SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectUnion();
+      function selectGroupBy() {
+        console.log('selectUnion')
+        const ast = parser.astify(`SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectGroupBy();
+
+      function selectHaving() {
+        console.log('selectHaving')
+        const ast = parser.astify(`SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectHaving();
+      function selectExists() {
+        console.log('selectExists')
+        const ast = parser.astify(`SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectExists();
+      function selectAny() {
+        console.log('selectAny')
+        const ast = parser.astify(`SELECT ProductName
+FROM Products
+WHERE ProductID = ANY
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity = 10);`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectAny();
+      function selectCase() {
+        console.log('selectCase')
+        const ast = parser.astify(`SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectCase();
+
+
+      function selectNULLFunctions() {
+        console.log('selectNULLFunctions')
+        const ast = parser.astify(`SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0))
+FROM Products;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectNULLFunctions();
+
+      function selectComment() {//not support
+        console.log('selectComment')
+        const ast = parser.astify(`/*Select all the columns
+of all the records
+in the Customers table:*/
+SELECT * FROM Customers;`)
+        console.log(ast)
+        const sql = parser.sqlify(ast)
+        console.log(sql)
+      }
+      selectComment();
+      function selectOperator() {
+        console.log('selectOperator')
+      }
+      selectOperator();
+    }
+  </script> -->
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

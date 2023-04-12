@@ -1,0 +1,31 @@
+{
+  "name": "sql-ast",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "antlr4-step1": "cd ./src/grammers/SQLite &&  antlr4 -visitor -Dlanguage=TypeScript SQLiteLexer.g4",
+    "antlr4-step2": "cd ./src/grammers/SQLite &&  antlr4 -visitor -Dlanguage=TypeScript SQLiteParser.g4"
+  },
+  "dependencies": {
+    "antd": "^5.3.3",
+    "antlr4": "^4.12.0",
+    "antlr4ts": "0.5.0-alpha.4",
+    "knex": "^2.4.2",
+    "mysql2": "^3.2.0",
+    "node-sql-parser": "^4.6.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "antlr4ts-cli": "0.5.0-alpha.4",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0"
+  }
+}
